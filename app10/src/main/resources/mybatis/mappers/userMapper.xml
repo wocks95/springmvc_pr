@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="mybatis.mappers.userMapper">
+  <!-- <select> 태그를 작성할 때 resultType 작성은 필수다. -->
+  <select id="selectUserList" parameterType="Map" resultType="UserDto">
+    SELECT id, first_name, last_name, email, gender, ip_address
+      FROM tbl_user
+     ORDER BY id ${sort} <!-- DESC: ${} -->
+     LIMIT #{offset}, #{display}; <!-- 0, 20; : #{} -->
+  </select>
+  
+  <select id="selectUserCount" resultType="int">
+    SELECT COUNT(*)
+      FROM tbl_user
+  </select>
+</mapper>

@@ -1,0 +1,45 @@
+1.원글 작성하는 방법 insertBbs
+ depth		0
+ group_id        bbs_id
+ group_order     0
+
+
+2.댓글 작성하는 방법
+ 1) 기존 댓글 업데이트  같은 그룹 내 댓글 중 원글의 group_order 보다 큰 group_order를 가지는 댓글들의 group_order를 1씩 증가시킵니다.
+ 2) 댓글 등록	insertBbsReply
+  depth		원글 depth + 1
+  group_id	원글 group_id
+  group_order   원글의 group_order + 1
+
+정렬 기준
+1차 정렬	group_id DESC
+2차 정렬	group_order ASC
+
+
+
+
+
+
+
+
+
+
+정렬 이전의 테이블
+bbs_id  conetents   	depth  	group_id  group_order
+1	      오늘 점심?	    0	       1	      0
+2	        ㄴ1.백반 	    1	       1	      1 → 2 → 3 → 4 → 5(댓글이 추가될수록 1씩 증가)
+3 	       ㄴ2.짬뽕	    1	       1	      1 → 2 → 3 → 4
+4	      오늘 저녁?   	  0	       4	      0
+5	        ㄴ3.순대국	  1	       1	      1 
+6	         ㄴa.순대국x	2	       1	      2 → 3
+7	          ㄴb.난찬성	2	       1	      2
+
+정렬 이후의 테이블
+bbs_id  conetents   	depth  	group_id  group_order
+4	      오늘 저녁?   	  0	      4	          0
+1	      오늘 점심?	    0	      1	          0
+5	        ㄴ3.순대국	  1	      1	          1 
+7	          ㄴb.난찬성	2	      1	          2
+6	         ㄴa.순대국x	2	      1	          2 → 3
+3 	         ㄴ2.짬뽕	  1	      1	          1 → 2 → 3 → 4
+2	         ㄴ1.백반 	  1	      1	          1 → 2 → 3 → 4 → 5

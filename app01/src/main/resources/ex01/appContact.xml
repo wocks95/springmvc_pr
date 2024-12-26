@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<bean id="Adder" class="com.min.app01.ex01.Adder" scope="singleton"/>
+
+<bean id="Subtractor" class="com.min.app01.ex01.Subtractor" scope="singleton"/>
+
+<bean id="Multiplier" class="com.min.app01.ex01.Multiplier" scope="singleton"/>
+
+<bean id="Divider" class="com.min.app01.ex01.Divider" scope="singleton"/>
+
+<!-- Setter 이용 -->
+<bean id="Calc1" class="com.min.app01.ex01.Calculator" scope="singleton">
+  <property name="brand" value="샤프"/>
+  <property name="module1" ref="Adder"/>
+  <property name="module2" ref="Subtractor"/>
+  <property name="module3" ref="Multiplier"/>
+  <property name="module4" ref="Divider"/>
+</bean>
+
+<!-- constructor 이용 -->
+<bean id="Calc2" class="com.min.app01.ex01.Calculator" scope="singleton">
+  <constructor-arg value="필립스"/>
+  <constructor-arg ref="Adder"/>
+  <constructor-arg ref="Subtractor"/>
+  <constructor-arg ref="Multiplier"/>
+  <constructor-arg ref="Divider"/>
+</bean>
+
+
+</beans>

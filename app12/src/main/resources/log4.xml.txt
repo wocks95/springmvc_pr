@@ -1,0 +1,63 @@
+LOGBACK (MVN REPOSITORY => POM.XML)
+
+1. log4j 프로젝트의 후속 프로젝트
+2. 속도, 성능 등에서 많은 개선이 이루어졌습니다.
+3. logbcak-core, logback-classic, logback-access 모듈로 구성되어 있습니다.
+4. logback-classic은 SLF4J API를 구현합니다.
+  User - SLF4J - Log4j <!-- Logging -->에 이미 설치되어있음.
+	       - Logback
+	       - java API Log
+	       - ...등등
+5. logback-classic, slf4g-api 디펜던시를 사용합니다.
+
+LOGBACK Configuration
+1. 클래스 패스(src/main/resources)에 logback-test.xml 또는 logback.xml 파일을 둡니다.
+   우선 수위를 가집니다.
+   1) logback.groovy(우리는 사용 안하는 파일입니다.)
+   2) logback-test.xml
+   3) logback.xml (우리가 사용할 파일입니다.)
+2. logback.xml 파일은 <configuration> 태그로 구성됩니다.
+
+--Appender
+  1. 로깅 이벤트 작성을 수행합니다.
+  2. 종류
+    1)OutputStreamAppender : 출력 스트림 디펜더
+    2)ConsoleAppender : 콘솔 어펜더
+    3)FileAppender : 파일 어펜더 (싱글 로그 파일)
+    4)RollingFileAppender : 롤링 파일 어펜더 (로그 파일 롤오버 : 여러 로그 파일 생산)
+
+*로그를 많이 남길 때 사용하는 모드 : DEBUG <root> 태그의 level
+*개발이 끝날 때면 INFO
+
+PatternLayout
+
+1. 주요 패턴
+  1) %loger{lenth}  : 로거, 로그를 찍는 클래스
+  2) %date{Pattern} : 로그, 기록 날짜/시간 (logback 1.3은 
+     java.time.format.DateTimeFormatter의 pattern을 그대로 사용합니다.)
+  3) %level         : 로그 레벨, 로그를 남기는 상황(logback의 경우 OFF, ERROR, WARN, INFO, DEBUG, TRACE)
+  4) %thread        : 로깅 이벤트가 발생한 스레드 (작업 분기, 대표적으로 main 스레드)
+  5) %msg 	    : 로그 메시지
+  6) %n		    : 줄 바꿈 (Line Seperator)
+
+2. 색상 지정(18 색상 - Documentation 참고)
+  %black, %red, %green, %blue, ..., %highlight 
+  예시) %highlight(%level) : 로그 레벨을 종류별로 다른 색상으로 지정합니다. 
+
+Log Level
+
+1. 로깅 이벤트가 언제 발생하는지를 의미합니다.
+2. logback의 종류
+  1) OFF   : 로그를 안 남깁니다.
+  2) ERROR : 요청 처리 중 문제가 발생하는 경우에 로그를 남깁니다.
+  3) WARN  : ERROR 상황과 WARN 상황에서 로그를 남깁니다.
+	     요청 처리가 가능하지만 향후 시스템 에러의 원인이 될 수 있는 경우 
+	     경고성메시지를 로그로 남깁니다.
+  4) INFO  : ERROR, WARN, INFO 상황에서 로그를 남깁니다.
+ 	     애플리케이션이 동작하는 일반적인 상황에서 로그를 남깁니다. 
+	     (로그인, 상태 변경 등) - 운영 시 많이 사용하는 레벨입니다.
+  5) DEBUG : ERROR, WARN, INFO, DEBUG 상황에서 로그를 남깁니다.
+	     애플리케이션이 동작하는 구체적인 상황에서 로그를 남깁니다. 
+   	     -디버그 메시지를 남기기 때문에 *개발 시 많이 사용하는 레벨입니다. 
+  6) TRACE : ERROR, WARN, INFO, DEBUG, TRACE 상황에서 로그를 남깁니다.
+   	     아주 자세한 디버그 메시지를 확인할 수 있습니다.

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 
+  매퍼
+  1. SQL 구문을 작성하는 파일입니다.
+  2. 다음 태그를 사용할 수 있습니다.
+    1) <select>
+    2) <insert>
+    3) <update>
+    4) <delete>
+  3. 모든 태그는 id 속성을 작성합니다.
+    1) 동일한 id 속성 값을 가질 수 없습니다.
+    2) SQL 구문과 매핑할 메소드의 이름을 id 속성 값으로 지정하는 것을 권장합니다.
+      (1) <select id="selectBoardList">
+      (2) <select id="selectBoardCount">
+      (3) <select id="selectBoardById">
+      (4) <insert id="insertBoard">
+      (5) <update id="updateBoard">
+      (6) <delete id="deleteBoard">
+      
+  4. SQL 구문으로 전달되는 값이 있는 경우 parameterType 속성을 작성합니다. (생략 가능)
+    1) <select parameterType="int">
+    2) <insert parameterType="com.min.app07.dto.BoardDto">
+    3) <update parameterType="com.min.app07.dto.BoardDto">
+    4) <delete parameterType="int">
+  5. SQL 구문의 결과 타입은 resultType 속성에 작성합니다. <select> 태그만 작성합니다. <insert>, <update>, <delete> 태그(int로 동일하게 작성)는 작성할 수 없습니다.
+    1) List<BoardDto> selectBoardList(); 
+       <select resultType="com.min.app07.dto.BoardDto"> resultType="전달되는 데이터 타입을 작성해야하고 데이터를 몇개 보내는지 적는게 아니다."
+    2) int selectBoardCount();
+      <select resultType="int">
+    3) BoardDto selectBoardById(int boardId); 
+      <select resultType="com.min.app07.dto.BoardDto">
+ -->
+
+<!-- 
+  Parameter 처리 방식
+  1. #{parameter}
+    1) SQL 구문으로 전달된 파라미터를 PreparedSrarement의 Place Holder(? 마크) 방식으로 처리한다.
+    2) 작성 방법
+      1) 파라미터가 여러 개인 경우
+        #{param1}, #{param2}, #{param3}, ...
+      2) 파라미터가 일반 변수인 경우
+        #{변수명}
+      3) 파라미터가 Map인 경우
+        #{key}
+      4) 파라미터가 DTO인 경우
+        #{field}
+  2. ${parameter}
+    1) 문자열 대체 방식이다. (String Substitution)
+    2) 전달된 파라미터가 따옴표 또는 이스케이프 처리 없이 그대로 SQL 구문에 포함됩니다.
+    3) SQL 구문의 메타 데이터(테이블 이름, 칼럼 이름, 쿼리문 자체 키워드(DESC,ASC 등) 등)를 처리할 때 사용합니다.        
+ -->
+<!-- 
+  CDATA
+  1. Character Data(문자 데이터)를 의미합니다.
+  2. 마크업 언어(xml)에서 마크업으로 해석하지 않고 문자를 그대로 포함하고자 할 때 CDATA를 사용합니다.
+  3. 형식
+    <![CDATA[ 문자데이터 ]]>
+ -->
+ 
+ <!-- 
+  동적 쿼리
+  1. if
+    1) 형식
+      <if test="파라미터조건식"></if>
+    2) 예시
+      <if test="title != null"></if>  
+      <if test="title != ''"></if>  
+      <if test="userDto.usrId != 0"></if>
+  2. foreach
+    1) 형식
+      <foreach collection="array(직접)|list(직접)|key(Map)|field(Map)" item="요소" open="시작구문" close="종료구문" separator="구분자" index="인덱스" nullable="true|false"> 
+        #{요소}
+      </foreach>
+    2) 예시
+      (1) 파라미터가 String[](배열)인 경우 ::: String[] flowers = {"모란", "백합", "국화"};
+        <foreach collection="array" item="element" open="ID IN (" close=")" separator=",">
+          #{element}
+        </foreach>  
+        ** 결과 : NAME IN (element1, element2, ...)
+      (2) 파라미터가 List인 경우 ::: List<String> flowers = Arrays.asList("모란","백합","국화");
+        <foreach collection="list" item="item" open="(" close")" separator=",">
+          #{item}
+        </foreach>
+        ** 결과 : (item1, item2, ...)
+      (3) 파라미터가 배열 또는 리스트를 가진 Map인 경우 ::: Map<String, Object> map = Map.of("flowers", Arrays.asList("모란","백합", "국화")); ]
+        List<String> flowers = Arrays.asList("모란", "백합", "국화");
+        Map<String, Object> map = Map.of("flowers", flowers);
+        <foreach collection="flowers
+        ", item="flower" open="(" close")" separator=",">
+          #{flower}
+        </foreach>
+        ** 결과 : '모란', '백합', '국화'     
+  -->
+
+<mapper namespace="mybatis.mappers.userMapper"> 
+  <insert id="insertUser" parameterType="UserDto">
+    INSERT INTO tbl_user
+    VALUES (null, #{userEmail}, #{userPw}, #{userName})
+  </insert>
+  
+  <select id="selectUserByMap" parameterType="Map" resultType="UserDto">
+    SELECT user_id, user_email, user_pw, user_name
+      FROM tbl_user
+    <where>
+      <if test="userEamil != null">user_email = #{userEamil}</if>
+      <if test="userPw != null">AND user_pw = #{userPw}</if>
+    </where>
+    <!-- 
+         userEamil이 null이 아니라면
+         userPw가 null이 아니라면 
+     -->
+  </select>
+  
+</mapper>

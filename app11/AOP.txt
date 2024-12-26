@@ -1,0 +1,36 @@
+수업영상 녹화본
+https://mybox.naver.com/share/verify?shareKey=0YnQlWNe1w6O0tzeRU1oHi7uVxMryeunH8tbO9Zx0yAC&resourceKey=bWlua3Q3OHwzNDcyNTkxNDUyMzA2MzIxMjEyfER8MTU1NTAxMjI
+20241217
+
+------------
+AOP
+1. Aspect Oriented Programming
+2. 관점 지향 프로그래밍
+3. 특정 시점(관점)에 반복적으로 동작 시킬 작업을 등록할 때 사용한다.
+4. 비즈니스 메소드마다 반복해서 처리해야 하는 부분(로깅 처리, 트랜잭션 처리 등)을 
+   여러 번 작성하지 않고. 하나의 코드만으로 반복해서 적용하는 프로그래밍 방식을 의미합니다.
+5. 개념 이해
+              ☞(횡단)
+              jsp >> Controller >> Service >> Repository >> DB
+    /write.do
+    /regist.do
+    /modify.do
+    /remove.do
+    /list.do
+    /detail.do
+		                  ↑             ↑
+		                (종단)        (종단)
+		                 로그 남기기    트랜잭션
+  
+
+6.AOP 핵심 용어
+  1)JoinPoint : 조인 포인트, AOP를 적용할 메소드 전체를 의미합니다.
+  2)PointCut  : 포인트컷, JoinPoint 중에서 AOP를 적용한 메소드를 의미합니다. (후보 중 선택된 메소드, 일부 또는 전부 가능)
+  3)Advice    : 어드바이스, AOP 작업 자체를 의미합니다. (로그, 트랜잭션 등)
+
+7. Advice 동작 시점
+  1) @Before: PointCut 동작 이전
+  2) @After : PoingCut 동작 이후 (동작 후 예외 발생 여부와 상관 없이 동작)
+  3) @Around: PoingCut 동작 이전과 이후 모두 동작
+  4) @AfterReturning : PointCut 정상 동작 이후
+  5) @AfterThrowing  : PointCut 예외 동작 이후 

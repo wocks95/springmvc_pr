@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <!-- Root Context: defines shared resources visible to all other web components -->
+
+  <!-- Spring Bean Configuration File -->
+  
+  <!-- 1. com.zaxxer.hiKari.HikariConfig -->
+  <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+    <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+    <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/db_app07?serverTimezone=Asia/Seoul"/>
+    <property name="username" value="greenit"/>
+    <property name="password" value="greenit"/>
+  </bean>
+  
+  <!-- 2. com.zaxxer.hikari.HikariDataSource -->
+  <bean id="hikariDataSouce" class="com.zaxxer.hikari.HikariDataSource">
+    <constructor-arg ref="hikariConfig"/>
+  </bean>
+  
+  <!-- 3. org.mybatis.spring.SqlSessionFactoryBean -->
+  <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="hikariDataSouce"/>
+    <property name="configLocation" value="classpath:mybatis/configuration/mybatis-config.xml"/>
+    <property name="mapperLocations" value="classpath:mybatis/mappers/*.xml"/>
+  </bean>
+  
+  <!-- 4. org.mybatis.spring.SqlSessionTemplate -->
+  <bean id="SqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+    <constructor-arg ref="sqlSessionFactoryBean"/>
+  </bean>
+  
+  
+  
+  
+  
+</beans>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+  <!-- 
+    Contact contact = new contact();
+    contact.setMobile("010-1111-1111");
+    contact.setEmail("user@min.com");
+    
+    Person person = new Person();
+    person.setName("유저");
+    person.setContact(contact);
+   -->
+   
+   <!-- 
+    id    : Spring Container 에 저장할 bean 의 이름
+    class : Spring Container 에 저장할 bean 의 타입
+    scope : Spring Container 에 저장할 bean 의 Life Cycle
+      -singleton : bean 을 하나만 만들어 제공한다. (디폴트)
+      -prototype : 요청할때마다 새로운 bean 을 만들어 제공한다. (1회용 방식)
+    -->
+   <!-- 
+    property 태그 : Setter 를 이용해서 값을 전달하는 태그
+      name : 필드 이름
+      value : 값을 전달 
+      <ref bean= "다른 <bean> 태그의 id"/>  
+    -->
+  <bean id ="contactBean" class="com.min.app01.pkg01_setter.Contact" scope="singleton">
+    <property name="mobile">
+      <value>010-1111-1111</value>
+    </property>
+    <property name="email" value="user@min.com"/>
+  </bean>
+
+  <bean id="personBean" class="com.min.app01.pkg01_setter.Person" scope= "singleton">
+      <property name="name">
+        <value>유저</value>
+      </property>
+      <property name="contact">
+        <!-- ref 태그 -->
+        <ref bean="contactBean"/> 
+      </property>
+  </bean>
+  
+  <!-- property name="contact" ref="contactBean"
+                               속성으로 쓸 수 있다. -->
+
+
+
+
+
+
+</beans>

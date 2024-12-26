@@ -1,0 +1,15 @@
+<insert parameterType="BbsDto">
+  INSERT INTO tbl_bbs VALUES (...) group_id 빼고 insert
+
+<selectKey order=AFTER keyproperty="bbsId">
+  SELECT LAST_INSERT_ID()
+</selectKey>
+</insert>
+
+<update parameterType="BbsDto">
+  UPDATE tbl_bbs
+     SET group_id = #{groupId}
+   WHERE bbs_id = #{bbsId}
+</update>
+
+이전에 등록된 bbsID의 번호 = LAST_INSERT_ID

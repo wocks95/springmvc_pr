@@ -1,0 +1,37 @@
+프로젝트
+  myapp
+
+group id
+  com.min
+
+artifact id
+  myapp
+
+src/main/java
+  com.min.myapp.controller
+    MvcController.java
+    BlogController.java
+  com.min.myapp.dao
+    IBlogDao.java
+    BlogDaoImpl.java
+    JdbcConnection.java (가능하면 Dao에 편입하기)
+  com.min.myapp.dto
+    BlogDto.java
+  com.min.myapp.service
+    IBlogService.java
+    BlogServiceImpl.java
+
+src/main/resources
+  data.sql
+  log4j.xml
+
+src/test/java
+  BlogDaoTest.java
+
+src/main/webapp
+  -WEB-INF/views
+    -blog
+      -list.jsp
+      -detail.jsp
+      -write.jsp
+    -main.jsp
