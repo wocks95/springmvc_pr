@@ -28,8 +28,8 @@
       FROM tbl_attach
      WHERE attach_id = #{attachId}
   </select>
-
-  <insert id="insertNotice" parameterType="NoticeDto"> <!-- resultType 작성 불가, int로 고정되어있기 때문 -->
+  
+  <insert id="insertNotice" parameterType="NoticeDto">
     INSERT INTO tbl_notice
     VALUES (null, #{noticeTitle}, #{noticeContents}, NOW())
     <selectKey keyProperty="noticeId" resultType="int" order="AFTER">
@@ -41,8 +41,8 @@
     INSERT INTO tbl_attach
     VALUES (null, #{noticeId}, #{filePath}, #{originalFilename}, #{filesystemName}, 0)
   </insert>
-
-  <delete id="deleteNotice" parameterType="int" >
+  
+  <delete id="deleteNotice" parameterType="int">
     DELETE
       FROM tbl_notice
      WHERE notice_id = #{noticeId}
@@ -52,6 +52,6 @@
     UPDATE tbl_attach
        SET download_count = download_count + 1
      WHERE attach_id = #{attach_id}
-  
   </update>
+
 </mapper>
