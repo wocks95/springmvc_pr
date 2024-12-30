@@ -1,4 +1,4 @@
-package com.min.app09.controller;
+package com.min.semi.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
